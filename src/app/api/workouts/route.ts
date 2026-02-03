@@ -1,7 +1,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
-import { db, workouts, workoutExercises, exercises, sets, users } from "@/db";
-import { eq, and, gte, lt } from "drizzle-orm";
+import { db, workouts, users } from "@/db";
+import { eq, and, gte, lt, or } from "drizzle-orm";
 
 export async function GET(request: NextRequest) {
   const { userId: clerkId } = await auth();
@@ -36,13 +36,15 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "User not found" }, { status: 404 });
   }
 
-  // Fetch workouts for the user on the specified date
+  // Fetch workouts for the user on the specified date (by startedAt or scheduledAt)
   const userWorkouts = await db.query.workouts.findMany({
     where: and(
       eq(workouts.userId, user.id),
       eq(workouts.isTemplate, false),
-      gte(workouts.startedAt, startOfDay),
-      lt(workouts.startedAt, endOfDay)
+      or(
+        and(gte(workouts.startedAt, startOfDay), lt(workouts.startedAt, endOfDay)),
+        and(gte(workouts.scheduledAt, startOfDay), lt(workouts.scheduledAt, endOfDay))
+      )
     ),
     with: {
       workoutExercises: {

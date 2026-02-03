@@ -37,4 +37,11 @@ This is a Next.js 16 project using the App Router with React 19 and TypeScript.
 - `src/middleware.ts` - Clerk authentication middleware
 - `public/` - Static assets
 
+
+
+IMPORTANT: When generating any code, ALWAYS first refer to the relevant documentation files within the /docs directory to understand existing patters, conventions and best practices before implementation: 
+- /docs/ui.md
+- /docs/data-mutation.d
+- /docs/ui.d
+
 **Path Alias:** `@/*` maps to `./src/*`

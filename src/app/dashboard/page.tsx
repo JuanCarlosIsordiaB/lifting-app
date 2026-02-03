@@ -1,9 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { format } from "date-fns";
-import { Dumbbell, Loader2 } from "lucide-react";
+import { Dumbbell, Loader2, Plus } from "lucide-react";
 
+import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
   Card,
@@ -80,11 +82,19 @@ export default function DashboardPage() {
     return (
       <div className="container mx-auto py-8 px-4 max-w-4xl">
         <div className="flex flex-col gap-6">
-          <div className="flex flex-col gap-2">
-            <h1 className="text-3xl font-bold">Workout Log</h1>
-            <p className="text-muted-foreground">
-              View and track your workouts by date
-            </p>
+          <div className="flex items-start justify-between gap-4">
+            <div className="flex flex-col gap-2">
+              <h1 className="text-3xl font-bold">Workout Log</h1>
+              <p className="text-muted-foreground">
+                View and track your workouts by date
+              </p>
+            </div>
+            <Button asChild>
+              <Link href="/dashboard/workout/new">
+                <Plus className="mr-2 h-4 w-4" />
+                New Workout
+              </Link>
+            </Button>
           </div>
           <div className="h-[300px] w-full rounded-md border border-input bg-background" />
         </div>
@@ -95,11 +105,19 @@ export default function DashboardPage() {
   return (
     <div className="container mx-auto py-8 px-4 max-w-4xl">
       <div className="flex flex-col gap-6">
-        <div className="flex flex-col gap-2">
-          <h1 className="text-3xl font-bold">Workout Log</h1>
-          <p className="text-muted-foreground">
-            View and track your workouts by date
-          </p>
+        <div className="flex items-start justify-between gap-4">
+          <div className="flex flex-col gap-2">
+            <h1 className="text-3xl font-bold">Workout Log</h1>
+            <p className="text-muted-foreground">
+              View and track your workouts by date
+            </p>
+          </div>
+          <Button asChild>
+            <Link href="/dashboard/workout/new">
+              <Plus className="mr-2 h-4 w-4" />
+              New Workout
+            </Link>
+          </Button>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-6">
