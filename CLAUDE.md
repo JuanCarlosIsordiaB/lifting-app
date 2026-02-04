@@ -7,6 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 **ALWAYS refer to the relevant documentation files in the `/docs` directory before generating any code.** The docs contain project-specific patterns, conventions, and guidelines that must be followed. Read the applicable docs files first to ensure generated code is consistent with established patterns.
 
 - /docs/ui.md
+- /docs/routing.md
 
 ## Commands
 
@@ -22,6 +23,7 @@ npm run lint     # Run ESLint
 This is a Next.js 16 project using the App Router with React 19 and TypeScript.
 
 **Tech Stack:**
+
 - Next.js 16 with App Router (`src/app/`)
 - React 19
 - TypeScript (strict mode)
@@ -30,6 +32,7 @@ This is a Next.js 16 project using the App Router with React 19 and TypeScript.
 - ESLint 9 with flat config
 
 **Project Structure:**
+
 - `src/app/` - App Router pages and layouts
 - `src/app/layout.tsx` - Root layout with ClerkProvider and Geist fonts
 - `src/app/page.tsx` - Home page
@@ -37,11 +40,14 @@ This is a Next.js 16 project using the App Router with React 19 and TypeScript.
 - `src/middleware.ts` - Clerk authentication middleware
 - `public/` - Static assets
 
+## Code Generation Guidelines
 
+IMPORTANT: When generating any code, ALWAYS first refer to the relevant documentation files within the /docs directory to understand existing patterns, conventions and best practices before implementation:
 
-IMPORTANT: When generating any code, ALWAYS first refer to the relevant documentation files within the /docs directory to understand existing patters, conventions and best practices before implementation: 
 - /docs/ui.md
-- /docs/data-mutation.d
-- /docs/ui.d
+- /docs/routing.md
+- /docs/data-mutation.md
+- /docs/auth.md
+- /docs/server-components.md
 
 **Path Alias:** `@/*` maps to `./src/*`

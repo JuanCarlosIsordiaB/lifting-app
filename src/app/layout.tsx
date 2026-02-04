@@ -35,6 +35,7 @@ export default function RootLayout({
       <html lang="en">
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          suppressHydrationWarning
         >
           <header className="flex justify-end gap-4 p-4">
             <SignedOut>
