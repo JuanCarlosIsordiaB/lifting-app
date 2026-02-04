@@ -3,6 +3,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { db, workouts, users } from "@/db";
 import { eq, and, gte, lt, or } from "drizzle-orm";
 
+export const dynamic = "force-dynamic";
+
 export async function GET(request: NextRequest) {
   const { userId: clerkId } = await auth();
 
