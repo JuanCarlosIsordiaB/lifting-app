@@ -1,17 +1,32 @@
 import { notFound, redirect } from "next/navigation";
 import { auth } from "@clerk/nextjs/server";
 import { getWorkoutById } from "@/data/workouts";
+import { db } from "@/db";
+import { users } from "@/db/schema";
+import { eq } from "drizzle-orm";
 import { format } from "date-fns";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
 
 export default async function WorkoutDetailPage({
   params,
 }: {
   params: Promise<{ workoutId: string }>;
 }) {
-  const { userId } = await auth();
-  if (!userId) {
+  const { userId: clerkId } = await auth();
+  if (!clerkId) {
     redirect("/sign-in");
+  }
+
+  // Find the database user by Clerk ID
+  const user = await db.query.users.findFirst({
+    where: eq(users.clerkId, clerkId),
+  });
+
+  if (!user) {
+    notFound();
   }
 
   const { workoutId } = await params;
@@ -28,7 +43,7 @@ export default async function WorkoutDetailPage({
   }
 
   // Authorization check - ensure the workout belongs to the authenticated user
-  if (workout.userId.toString() !== userId) {
+  if (workout.userId !== user.id) {
     notFound();
   }
 
@@ -38,6 +53,13 @@ export default async function WorkoutDetailPage({
 
   return (
     <div className="container mx-auto py-8 px-4 max-w-4xl">
+      <Button variant="ghost" size="sm" asChild className="mb-4">
+        <Link href="/dashboard">
+          <ArrowLeft />
+          Back to Dashboard
+        </Link>
+      </Button>
+
       <div className="mb-6">
         <h1 className="text-3xl font-bold mb-2">{workout.name || "Workout"}</h1>
         <p className="text-muted-foreground">{formattedDate}</p>

@@ -14,20 +14,32 @@ export async function GET(request: NextRequest) {
 
   const searchParams = request.nextUrl.searchParams;
   const dateParam = searchParams.get("date");
+  const startDateParam = searchParams.get("startDate");
+  const endDateParam = searchParams.get("endDate");
 
-  if (!dateParam) {
+  let startOfDay: Date;
+  let endOfDay: Date;
+
+  // Support both single date and date range queries
+  if (startDateParam && endDateParam) {
+    // Date range query
+    startOfDay = new Date(startDateParam);
+    startOfDay.setHours(0, 0, 0, 0);
+    endOfDay = new Date(endDateParam);
+    endOfDay.setHours(23, 59, 59, 999);
+  } else if (dateParam) {
+    // Single date query
+    const date = new Date(dateParam);
+    startOfDay = new Date(date);
+    startOfDay.setHours(0, 0, 0, 0);
+    endOfDay = new Date(date);
+    endOfDay.setHours(23, 59, 59, 999);
+  } else {
     return NextResponse.json(
-      { error: "Date parameter is required" },
+      { error: "Date parameter(s) required" },
       { status: 400 }
     );
   }
-
-  // Parse the date and create start/end of day
-  const date = new Date(dateParam);
-  const startOfDay = new Date(date);
-  startOfDay.setHours(0, 0, 0, 0);
-  const endOfDay = new Date(date);
-  endOfDay.setHours(23, 59, 59, 999);
 
   // Find user by clerkId
   const user = await db.query.users.findFirst({
