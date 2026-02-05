@@ -154,39 +154,45 @@ export default function DashboardPage() {
             ) : (
               <div className="flex flex-col gap-4">
                 {workouts.map((workout) => (
-                  <Card key={workout.id}>
-                    <CardHeader>
-                      <CardTitle className="text-lg">{workout.name}</CardTitle>
-                      <CardDescription>
-                        {workout.exercises.length} exercise
-                        {workout.exercises.length !== 1 ? "s" : ""}
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent className="flex flex-col gap-4">
-                      {workout.exercises.map((exercise) => (
-                        <div key={exercise.id} className="flex flex-col gap-2">
-                          <h4 className="font-medium">{exercise.name}</h4>
-                          <div className="grid grid-cols-3 gap-2 text-sm font-medium text-muted-foreground">
-                            <span>Set</span>
-                            <span>Weight ({exercise.sets[0]?.weightUnit || "kg"})</span>
-                            <span>Reps</span>
+                  <Link
+                    key={workout.id}
+                    href={`/dashboard/workout/${workout.id}`}
+                    className="transition-opacity hover:opacity-80"
+                  >
+                    <Card>
+                      <CardHeader>
+                        <CardTitle className="text-lg">{workout.name}</CardTitle>
+                        <CardDescription>
+                          {workout.exercises.length} exercise
+                          {workout.exercises.length !== 1 ? "s" : ""}
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent className="flex flex-col gap-4">
+                        {workout.exercises.map((exercise) => (
+                          <div key={exercise.id} className="flex flex-col gap-2">
+                            <h4 className="font-medium">{exercise.name}</h4>
+                            <div className="grid grid-cols-3 gap-2 text-sm font-medium text-muted-foreground">
+                              <span>Set</span>
+                              <span>Weight ({exercise.sets[0]?.weightUnit || "kg"})</span>
+                              <span>Reps</span>
+                            </div>
+                            <div className="flex flex-col gap-1">
+                              {exercise.sets.map((set) => (
+                                <div
+                                  key={set.setNumber}
+                                  className="grid grid-cols-3 gap-2 text-sm"
+                                >
+                                  <span>{set.setNumber}</span>
+                                  <span>{set.weight > 0 ? set.weight : "BW"}</span>
+                                  <span>{set.reps}</span>
+                                </div>
+                              ))}
+                            </div>
                           </div>
-                          <div className="flex flex-col gap-1">
-                            {exercise.sets.map((set) => (
-                              <div
-                                key={set.setNumber}
-                                className="grid grid-cols-3 gap-2 text-sm"
-                              >
-                                <span>{set.setNumber}</span>
-                                <span>{set.weight > 0 ? set.weight : "BW"}</span>
-                                <span>{set.reps}</span>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      ))}
-                    </CardContent>
-                  </Card>
+                        ))}
+                      </CardContent>
+                    </Card>
+                  </Link>
                 ))}
               </div>
             )}
