@@ -11,6 +11,7 @@ import {
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { Button } from "@/components/ui/button";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -47,14 +48,14 @@ export default function RootLayout({
             <header className="flex justify-end gap-4 p-4">
               <SignedOut>
                 <SignInButton mode="modal">
-                  <button className="px-4 py-2  text-white rounded-md hover:text-indigo-700 font-bold transition">
+                  <Button variant="outline" size="default">
                     Sign In
-                  </button>
+                  </Button>
                 </SignInButton>
                 <SignUpButton mode="modal">
-                  <button className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 font-bold transition-all">
+                  <Button variant="default" size="default">
                     Sign Up
-                  </button>
+                  </Button>
                 </SignUpButton>
               </SignedOut>
               <SignedIn>
